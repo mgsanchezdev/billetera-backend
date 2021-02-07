@@ -27,7 +27,7 @@ public class ClienteControllers extends Conexion {
     
     public boolean createCliente (Cliente cliente) throws SQLException{
         try{
-            String sql = "insert into clientes values (null,?,?,?,0)";
+            String sql = "INSERT INTO clientes VALUES (null,?,?,?,?,0)";
             Boolean result = false;
             con = conectar();
             
@@ -36,8 +36,7 @@ public class ClienteControllers extends Conexion {
             ps.setString(2,cliente.getNombres());
             ps.setString(3,cliente.getEmail());
             ps.setString(4, cliente.getCelular());
-            ps.setDouble(5, cliente.getSaldo());
-            
+                        
             if(ps.executeUpdate() == 1){
                 result = true;
             }
