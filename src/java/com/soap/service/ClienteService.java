@@ -85,6 +85,23 @@ public class ClienteService {
         }
     }
     
+    //Pagar compra
     
+     @WebMethod(operationName = "pagarCompra")
+    public String pagarCompra(@WebParam(name = "documento") String documento , @WebParam(name = "celular") String celular,@WebParam(name = "importeCompra") double importeCompra) throws ClassNotFoundException {
+        try {
+            double saldoActual  = 0;
+            if (clienteControllers.pagarCompra(documento,celular,importeCompra)) {
+                saldoActual = clienteControllers.consultarSaldo(celular, documento);
+                return "El saldo despues de la recarga es de $" + saldoActual ;
+            }else{
+                return "·No tiene saldo suficiente para pagar la compra, por favor carge saldo";
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+            return "Erro de conexion ";
+        }
+    }
     
 }
