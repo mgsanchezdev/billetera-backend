@@ -93,7 +93,7 @@ public class ClienteService {
             double saldoActual  = 0;
             if (clienteControllers.pagarCompra(documento,celular,importeCompra)) {
                 saldoActual = clienteControllers.consultarSaldo(celular, documento);
-                return "El saldo despues de la recarga es de $" + saldoActual ;
+                return "El saldo despues de realizar la compra es de $" + saldoActual ;
             }else{
                 return "·No tiene saldo suficiente para pagar la compra, por favor carge saldo";
             }
