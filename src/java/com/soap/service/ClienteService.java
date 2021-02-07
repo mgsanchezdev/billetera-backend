@@ -69,5 +69,22 @@ public class ClienteService {
         }
     }
     
+    //Actulizar el saldo
+    
+     @WebMethod(operationName = "cargarSaldo")
+    public String cargarSaldo(@WebParam(name = "documento") String documento , @WebParam(name = "celular") String celular,@WebParam(name = "saldo") double saldo) throws ClassNotFoundException {
+        try {
+            double saldoActual  = 0;
+            if (clienteControllers.cargarSaldo(documento,celular,saldo)) {
+                saldoActual = clienteControllers.consultarSaldo(celular, documento);
+            }
+            return "El saldo despues de la recarga es de $" + saldoActual ;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteService.class.getName()).log(Level.SEVERE, null, ex);
+            return "Erro de conexion ";
+        }
+    }
+    
+    
     
 }

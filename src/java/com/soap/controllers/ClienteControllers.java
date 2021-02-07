@@ -80,4 +80,43 @@ public class ClienteControllers extends Conexion {
             con.close();
         }
   }
+  
+  //Cargar saldo
+  
+      public boolean cargarSaldo(String documento, String celular, double saldo) throws SQLException, ClassNotFoundException {
+        try {
+            double saldoActual = 0;
+            double newSaldo =0 ;
+            String sqlSaldo = "SELECT saldo FROM clientes WHERE celular = " + celular + " && documento = " + documento + " ";
+            
+            String sqlUpdate = "UPDATE clientes SET saldo = ? WHERE  celular = " + celular + " && documento = " + documento + " ";
+
+            boolean respuesta = false;
+
+            con = conectar();
+            ps = con.prepareStatement(sqlSaldo);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+               saldoActual = rs.getInt(1);
+            }
+            
+            newSaldo = saldoActual + saldo;
+            
+            ps = con.prepareStatement(sqlUpdate);
+            ps.setDouble(1,newSaldo);
+
+            if (ps.executeUpdate() == 1) {
+                respuesta = true;
+            }
+
+            return respuesta;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteControllers.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            ps.close();
+            con.close();
+        }
+    }
 }
